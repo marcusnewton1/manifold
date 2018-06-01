@@ -78,6 +78,7 @@ GEM
     citeproc-ruby (1.1.8)
       citeproc (>= 1.0.4, < 2.0)
       csl (~> 1.4)
+    cleanroom (1.0.0)
     climate_control (0.2.0)
     clockwork (2.0.0)
       activesupport
@@ -112,6 +113,8 @@ GEM
     dotenv-rails (2.2.1)
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
+    dux (0.8.0)
+      yard_types
     elasticsearch (5.0.4)
       elasticsearch-api (= 5.0.4)
       elasticsearch-transport (= 5.0.4)
@@ -449,6 +452,7 @@ GEM
     with_advisory_lock (3.1.1)
       activerecord (>= 3.2)
       thread_safe
+    yard_types (0.2.0)
 
 PLATFORMS
   ruby
@@ -467,6 +471,7 @@ DEPENDENCIES
   charlock_holmes (~> 0.7)
   chroma (~> 0.2)
   citeproc-ruby (~> 1.1.0)
+  cleanroom
   clockwork (~> 2.0.0)
   closure_tree (~> 6.0)
   colorize (~> 0.8.0)
@@ -475,7 +480,9 @@ DEPENDENCIES
   data_uri (~> 0.1.0)
   database_cleaner (~> 1.0)
   dotenv-rails (~> 2.0)
+  dux
   elasticsearch (~> 5.0)
+  equalizer
   factory_bot_rails (~> 4.0)
   faker (~> 1.0)
   filesize (~> 0.1.0)
