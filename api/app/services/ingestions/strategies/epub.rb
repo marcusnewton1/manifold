@@ -1,6 +1,6 @@
 module Ingestions
   module Strategies
-    class Epub < Ingestions::AbstractStrategy
+    class Epub < Ingestions::Strategies::AbstractStrategy
     end
   end
 end

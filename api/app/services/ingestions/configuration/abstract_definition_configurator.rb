@@ -1,21 +1,24 @@
 module Ingestions
   module Configuration
-    class StrategyConfigurator
+    class AbstractDefinitionConfigurator
+      include ActiveSupport::Configurable
       include Concerns::Configurates
 
-      # @param [Symbol] name
-      # @param [Class, nil] strategy
-      def initialize(name, strategy = nil, &block)
-        strategy ||= "Ingestions::Strategies::#{name.to_s.camelize}".safe_constantize
+      config_accessor :interaction_namespace
 
-        raise Ingestions::ConfigurationError, "Strategy class was not provided and could not be derived from #{name}" if strategy.blank?
+      # @param [Symbol] name
+      # @param [Class, nil] interaction
+      def initialize(name, interaction = nil, &block)
+        interaction ||= derive_interaction(name)
+
+        raise Ingestions::Configuration::Error, "Interaction was not provided and could not be derived from #{name}" if interaction.blank?
 
         @options = {
-          name:     name.to_sym,
-          strategy: strategy,
+          name:        name.to_sym,
+          interaction: interaction,
         }
 
-        evaluate(&block)
+        evaluate(&block) if block_given?
       end
 
       # @param [String] text
@@ -61,6 +64,14 @@ module Ingestions
 
       def to_h
         @options
+      end
+
+      private
+
+      # @param [#to_s] name
+      # @return [String]
+      def derive_interaction(name)
+        "#{interaction_namespace}::#{name.to_s.camelize}".safe_constantize
       end
     end
   end

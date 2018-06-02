@@ -1,6 +1,6 @@
 module Ingestions
   module Strategies
-    class Document < Ingestions::AbstractStrategy
+    class Document < Ingestions::Strategies::AbstractStrategy
     end
   end
 end
