@@ -17,3 +17,4 @@ export Subject from "./Subject";
 export TwitterQuery from "./TwitterQuery";
 export Permission from "./Permission";
 export Log from "./Log";
+export ProjectCollection from "./ProjectCollection";

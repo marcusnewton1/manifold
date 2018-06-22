@@ -15,6 +15,7 @@ import Stylesheet from "./Stylesheet";
 import Developer from "./Developer";
 import TwitterQuery from "./TwitterQuery";
 import Permission from "./Permission";
+import ProjectCollection from "./ProjectCollection";
 
 export {
   Backend,
@@ -33,5 +34,6 @@ export {
   Stylesheet,
   Developer,
   TwitterQuery,
-  Permission
+  Permission,
+  ProjectCollection
 };

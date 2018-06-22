@@ -120,6 +120,16 @@ export default () => {
           helper: () => "/backend/project/new"
         },
         {
+          name: "backendProjectCollections",
+          exact: false,
+          component: Backend.ProjectCollection.Wrapper,
+          path: "/backend/project-collections/:id?",
+          helper: () => "backend/project-collections",
+          routes: [
+            // edit route, settings route
+          ]
+        },
+        {
           name: "backendProject",
           exact: false,
           component: Backend.Project.Wrapper,
