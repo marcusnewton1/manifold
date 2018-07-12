@@ -21,6 +21,23 @@
     }
   }
 
+  .aside-wide {
+    display: none;
+    float: left;
+    // TODO revisit sizing when have tablet/mobile comps
+    width: 300px;
+    padding-right: 50px;
+
+    @include respond($break40) {
+      display: block;
+    }
+
+    @include respond($break75) {
+      width: 380px;
+      padding-right: 70px;
+    }
+  }
+
   .panel {
     width: 100%;
 
@@ -31,6 +48,19 @@
 
     @include respond($break75) {
       width: calc(100% - 200px);
+    }
+  }
+
+  .panel-narrow {
+    width: 100%;
+
+    @include respond($break40) {
+      float: left;
+      width: calc(100% - 300px);
+    }
+
+    @include respond($break75) {
+      width: calc(100% - 380px);
     }
   }
 

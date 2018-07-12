@@ -73,15 +73,7 @@ export default class ProjectCollectionWrapperContainer extends PureComponent {
           entities={this.props.collectionProjects}
           entityComponent={Project.ListItem}
           orderChangeHandler={this.handleProjectOrderChange}
-          classNames={"grid-project"}
-          styles={
-            { display: "flex",
-              justifyContent: "space-between",
-              alignContent: "center",
-              listStyle: "none",
-              margin: "0",
-              border: "2px solid deepskyblue" }
-          }
+          classNames={"project-grid"}
         />
       </React.Fragment>
     )
@@ -89,9 +81,9 @@ export default class ProjectCollectionWrapperContainer extends PureComponent {
 
   render() {
     return (
-      <section className="backend-panel" style={{ border: "2px solid red" }}>
+      <section className="backend-panel">
         <div className="container">
-          <aside className="aside" style={{ padding: "10px 20px", border: "2px solid hotpink" }}>
+          <aside className="aside-wide project-collection-list">
             <List.Orderable
               entities={this.props.projectCollections}
               entityComponent={ProjectCollection.ListItem}
@@ -101,17 +93,17 @@ export default class ProjectCollectionWrapperContainer extends PureComponent {
               }}
               orderChangeHandler={this.handleCollectionOrderChange}
             />
-            <div>
+            <div className="buttons-icon-horizontal">
               <button className="button-icon-secondary">
                 <i className="manicon manicon-plus" />
-                  New
+                  Create New Collection
               </button>
-              <p>
-                Drag Collections to reorder how they’ll appear in your Library. Select a Collection to edit its settings, visibility, and contents.
-              </p>
             </div>
+            <p className="instructional-copy">
+              Drag Collections to reorder how they’ll appear in your Library. Select a Collection to edit its settings, visibility, and contents.
+            </p>
           </aside>
-          <div className="panel">
+          <div className="panel-narrow">
             {this.renderCurrentCollection(this.state.currentCollection)}
             {/* Render child routes in drawer */}
           </div>

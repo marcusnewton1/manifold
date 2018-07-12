@@ -1,0 +1,34 @@
+// Currently no abstracted form styles exist for this set of inputs side-by-side
+// CABS if emerges as a design pattern
+.project-collection-sort {
+  display: flex;
+  justify-content: space-between;
+
+  // scope .form-list-fiter styles
+  .form-list-filter .select-group {
+    label {
+      font-size: 14px;
+    }
+
+    .select {
+      width: 260px;
+    }
+  }
+
+  // scope .form-secondary styles
+  .form-secondary .form-input {
+    display: flex;
+    align-items: flex-start;
+
+    .form-input-heading {
+      margin-right: 12px;
+      margin-bottom: 0;
+      color: $neutral50;
+      font-size: 14px;
+    }
+
+    .toggle-indicator {
+      display: inline-block;
+    }
+  }
+}

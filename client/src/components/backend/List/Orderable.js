@@ -8,12 +8,11 @@ export default class ListOrderable extends PureComponent {
     entityComponent: PropTypes.func,
     entityComponentProps: PropTypes.object,
     orderChangeHandler: PropTypes.func.isRequired,
-    classNames: PropTypes.string,
-    styles: PropTypes.object // This should get removed in favor of classes
+    classNames: PropTypes.string
   };
 
   static defaultProps = {
-    styles: { listStyle: "none", padding: "0", border: "2px solid deepskyblue" }
+    classNames: "list-orderable"
   };
 
   // This component will have the drag and drop interface
@@ -29,7 +28,7 @@ export default class ListOrderable extends PureComponent {
     if (!this.props.entities) return null;
 
     return (
-      <ul className={this.props.classNames} style={this.props.styles}>
+      <ul className={this.props.classNames}>
         {this.props.entities.map(entity => {
           return this.renderEntity(entity);
         })}

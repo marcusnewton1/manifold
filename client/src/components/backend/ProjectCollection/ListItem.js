@@ -20,15 +20,27 @@ export default class ProjectCollectionListItem extends PureComponent {
 
     // This should be an active class, for real
     const active = this.props.active === this.props.entity.id;
-    const styles = { padding: "5px 10px", border: "2px solid coral" };
-    active ? styles.backgroundColor = "#52e3ac" : null;
+    const itemClass = classnames("", {
+      selected: active
+    });
 
     return (
       <li onClick={this.handleClick}
           key={this.props.entity.id}
-          style={styles}
+          className={itemClass}
       >
-        {this.props.entity.attributes.title}
+        <span className="item-text">{this.props.entity.attributes.title}</span>
+        <div className="icon-group">
+          <span className="item-text">7</span>
+          <span className="manicon manicon-eye-outline">
+            <span className="screen-reader-text">Collection is visible</span>
+          </span>
+          <button className="manicon manicon-grabber">
+            <span className="screen-reader-text">
+              Change the order of this collection.
+            </span>
+          </button>
+        </div>
       </li>
     )
   }
