@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Form as FormContainer } from "containers/backend";
 import { Form as GlobalForm } from "components/global";
 import List from "./HasMany/List";
 import Header from "./HasMany/Header";
 import labelId from "helpers/labelId";
+import OptionsList from "./OptionsList";
 
 export default class FormHasMany extends PureComponent {
   static displayName = "Form.HasMany";
@@ -25,11 +25,13 @@ export default class FormHasMany extends PureComponent {
     errors: PropTypes.array,
     idForError: PropTypes.string,
     instructions: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    searchable: PropTypes.bool,
     wide: PropTypes.bool
   };
 
   static defaultProps = {
-    idForError: labelId("predictive-text-belongs-to-error-")
+    idForError: labelId("predictive-text-belongs-to-error-"),
+    searchable: true
   };
 
   onNew = value => {
@@ -95,14 +97,13 @@ export default class FormHasMany extends PureComponent {
             this.props.orderable || this.props.editClickHandler,
             this.props
           )}
-          {/* Add .autofill-open to .input-autofill in order to show autofill list  */}
-          <FormContainer.PredictiveInput
-            className="input-predictive"
+          <OptionsList
             placeholder={this.props.placeholder}
             label={this.entityName}
             onNew={this.props.onNew ? this.onNew : null}
             onSelect={this.onSelect}
             fetch={this.props.optionsFetch}
+            searchable={this.props.searchable}
             idForError={this.props.idForError}
           />
           {this.renderList(
