@@ -106,3 +106,9 @@
     }
   }
 }
+
+.list-total {
+  @include utilityPrimary;
+  color: $neutral50;
+  font-size: 14px;
+}

@@ -16,6 +16,8 @@ import Search from "./Search";
 import Subscriptions from "./Subscriptions";
 import Unsubscribe from "./Unsubscribe";
 import Projects from "./Projects";
+import ProjectCollections from "./ProjectCollections";
+import ProjectCollectionDetail from "./ProjectCollectionDetail";
 
 export {
   CollectionDetail,
@@ -35,5 +37,7 @@ export {
   Search,
   Subscriptions,
   Unsubscribe,
-  Projects
+  Projects,
+  ProjectCollections,
+  ProjectCollectionDetail
 };

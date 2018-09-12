@@ -1,0 +1,41 @@
+.project-collection-summary {
+
+  .section-heading {
+    display: inline-block;
+    text-decoration: none;
+
+    .manicon, .title {
+      transition: color $duration $timing;
+    }
+
+    &:hover {
+      .manicon, .title {
+        color: $accentPrimary;
+      }
+    }
+  }
+
+  .utility {
+    @include utilityPrimary;
+    display: inline-block;
+    margin-top: 50px;
+    font-size: 14px;
+
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $neutral80;
+      text-decoration: none;
+      transition: color $duration $timing;
+
+      &:hover {
+        color: $accentPrimary;
+      }
+
+      i {
+        margin-left: 15px;
+      }
+    }
+  }
+}

@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { ProjectList, Layout } from "components/frontend";
+import { ProjectList, Layout, ProjectCollection } from "components/frontend";
 import connectAndFetch from "utils/connectAndFetch";
 import { commonActions } from "actions/helpers";
 import { entityStoreActions } from "actions";
 import { select, meta, isLoaded } from "utils/entityUtils";
-import { projectsAPI, featuresAPI, requests } from "api";
+import { projectsAPI, featuresAPI, projectCollectionsAPI, requests } from "api";
 import get from "lodash/get";
 import isArray from "lodash/isArray";
 import lh from "helpers/linkHandler";
 import queryString from "query-string";
 import classNames from "classnames";
+import size from "lodash/size";
 
 // const { setProjectFilters } = uiFilterActions;
 const { request } = entityStoreActions;
-const featuredLimit = 4;
 const perPage = 20;
 
 export class HomeContainer extends Component {
@@ -43,18 +42,24 @@ export class HomeContainer extends Component {
       projectsAPI.featured(),
       requests.feProjectsFeatured
     );
+    const collectionRequest = request(
+      projectCollectionsAPI.index({ visible: true, showOnHomepage: true, projects: true, order: "position ASC" }),
+      requests.feProjectCollections
+    );
     const { promise: one } = HomeContainer.fetchProjects(dispatch, location);
     const { promise: two } = dispatch(featuredRequest);
+    const { promise: three } = dispatch(collectionRequest);
     promises.push(one);
     promises.push(two);
+    promises.push(three);
 
     if (!isLoaded(requests.feFeatures, getState())) {
       const featuresRequest = request(
         featuresAPI.index({ home: true }),
         requests.feFeatures
       );
-      const { promise: three } = dispatch(featuresRequest);
-      promises.push(three);
+      const { promise: four } = dispatch(featuresRequest);
+      promises.push(four);
     }
     return Promise.all(promises);
   };
@@ -63,7 +68,7 @@ export class HomeContainer extends Component {
     return {
       features: select(requests.feFeatures, state.entityStore),
       filteredProjects: select(requests.feProjectsFiltered, state.entityStore),
-      featuredProjects: select(requests.feProjectsFeatured, state.entityStore),
+      projectCollections: select(requests.feProjectCollections, state.entityStore),
       subjects: select(requests.feSubjects, state.entityStore),
       meta: meta(requests.feProjectsFiltered, state.entityStore),
       authentication: state.authentication
@@ -72,7 +77,7 @@ export class HomeContainer extends Component {
 
   static propTypes = {
     authentication: PropTypes.object,
-    featuredProjects: PropTypes.array,
+    projectCollections: PropTypes.array,
     filteredProjects: PropTypes.array,
     features: PropTypes.array,
     location: PropTypes.object,
@@ -135,54 +140,17 @@ export class HomeContainer extends Component {
     if (!filteredProjects || filteredProjects.length === 0) return true;
   }
 
-  showFeatured() {
-    const { featuredProjects } = this.props;
-    return featuredProjects && featuredProjects.length > 0;
-  }
+  renderProjectCollections() {
+    if (!this.props.projectCollections) return null;
 
-  renderFeaturedButton(limit) {
-    if (
-      !this.props.featuredProjects ||
-      this.props.featuredProjects.length <= limit
-    )
-      return null;
-    return (
-      <div className="button-nav" style={{ marginTop: "26px" }}>
-        <Link to={lh.link("frontendFeatured")} className="button-icon-primary">
-          <span>
-            <i className="manicon manicon-lamp" aria-hidden="true" />
-            See all featured
-          </span>
-        </Link>
-      </div>
-    );
-  }
-
-  renderFeaturedProjects() {
-    if (!this.showFeatured()) return null;
-
-    return (
-      <section>
-        <div className="container">
-          <header className="section-heading">
-            <div className="main">
-              <i className="manicon manicon-lamp" aria-hidden="true" />
-              <div className="body">
-                <h4 className="title">{"Featured Projects"}</h4>
-              </div>
-            </div>
-          </header>
-          <ProjectList.Grid
-            authenticated={this.props.authentication.authenticated}
-            favorites={get(this.props.authentication, "currentUser.favorites")}
-            projects={this.props.featuredProjects}
-            dispatch={this.props.dispatch}
-            limit={featuredLimit}
-          />
-          {this.renderFeaturedButton(featuredLimit)}
-        </div>
-      </section>
-    );
+    return this.props.projectCollections.map(collection => {
+      return <ProjectCollection.Summary
+               key={collection.id}
+               authentication={this.props.authentication}
+               collection={collection}
+               dispatch={this.props.dispatch}
+              />;
+    });
   }
 
   renderProjectLibrary() {
@@ -190,17 +158,12 @@ export class HomeContainer extends Component {
 
     const utilityHeader = classNames({
       utility: true,
-      right: this.renderFeaturedProjects()
-    });
-
-    const containerClasses = classNames({
-      container: true,
-      "extra-top": !this.showFeatured()
+      right: this.renderProjectCollections()
     });
 
     return (
       <section className="bg-neutral05">
-        <div className={containerClasses}>
+        <div className="container extra-top">
           <header className="section-heading">
             <div className="main">
               <i
@@ -212,15 +175,9 @@ export class HomeContainer extends Component {
               </div>
             </div>
             <div className={utilityHeader}>
-              {/*
-                 Note that we're using a different dumb component to render this.
-                 Note, too, that the parent component delivers all the data the child
-                 component needs to render (which is what keeps the child dumb)'
-                 */}
               <ProjectList.Filters
                 params={this.currentQuery()}
                 updateAction={this.handleFilterChange}
-                hideFeatured={!this.showFeatured()}
                 subjects={this.props.subjects}
               />
             </div>
@@ -257,14 +214,8 @@ export class HomeContainer extends Component {
             toggleSignInUpOverlay={this.commonActions.toggleSignInUpOverlay}
           />
         ) : null}
-        {/*
-          Note that this section will be used for "Recent Projects"
-          once that list is available, this is currently using the
-          "featured projects" set of entities instead so as to
-          showcase/debug the markup for this type of list.
-        */}
-        {this.renderFeaturedProjects()}
-        {this.renderProjectLibrary()}
+        {this.renderProjectCollections()}
+        {size(this.props.projectCollections) > 0 ? null : this.renderProjectLibrary()}
         <Layout.ButtonNavigation
           hideAtNarrow
           grayBg={false}

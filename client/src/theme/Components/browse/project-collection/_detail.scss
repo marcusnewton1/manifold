@@ -1,0 +1,32 @@
+.project-collection-detail {
+
+  .section-heading {
+    justify-content: space-between;
+
+    .form-list-filter {
+      justify-content: flex-end;
+
+      .select-group.inline {
+        width: auto;
+      }
+    }
+  }
+
+  .details {
+    margin-bottom: 25px;
+    line-height: 1.4;
+
+    @include respond($break80) {
+      max-width: 60%;
+    }
+
+    .description {
+      @include templateHead;
+      margin-bottom: 25px;
+    }
+
+    .list-total {
+      margin-bottom: 0;
+    }
+  }
+}

@@ -173,6 +173,14 @@ class Project < ApplicationRecord
     Project.authorizer.scope_updatable_projects(user)
   }
 
+  # TODO: Use the ordering on project collection
+  scope :with_collection_order, lambda { |collection_id|
+    pc = ProjectCollection.friendly.find(collection_id)
+    joins(:collection_projects)
+      .where(collection_projects: { project_collection: pc })
+      .order("collection_projects.position ASC")
+  }
+
   # Search
   # rubocop:disable Style/Lambda
   scope :search_import, -> {

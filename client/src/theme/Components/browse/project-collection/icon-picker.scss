@@ -1,0 +1,76 @@
+.icon-picker {
+  &.form-input .form-input-heading {
+    @include formInputSecondary;
+    text-transform: none;
+
+    @include respond($break60) {
+      height: 38px;
+    }
+  }
+
+  .icon-row {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    padding: 0;
+
+    li {
+      height: 50px;
+      width: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 26px;
+      border: 1px solid $neutral70;
+      color: $neutral70;
+      transition: color $duration $timing, background-color $duration $timing, border-color $duration $timing;
+
+      + li {
+        border-left: 0;
+      }
+
+      &:hover {
+        cursor: pointer;
+        border-color: $accentPrimary;
+        background-color: $accentPrimary;
+        color: $neutral110;
+      }
+
+      &.selected {
+        border-color: $accentPrimary;
+        background-color: $accentPrimary;
+        color: $neutral110;
+      }
+
+      &.manicon-books-with-glasses {
+        font-size: 16px;
+      }
+
+      &.manicon-lamp {
+        font-size: 26px;
+      }
+
+      &.manicon-new-round {
+        font-size: 28px;
+      }
+
+      @include respond($break50) {
+        height: 75px;
+        width: 75px;
+        font-size: 34px;
+
+        &.manicon-books-with-glasses {
+          font-size: 26px;
+        }
+
+        &.manicon-lamp {
+          font-size: 40px;
+        }
+
+        &.manicon-new-round {
+          font-size: 42px;
+        }
+      }
+    }
+  }
+}

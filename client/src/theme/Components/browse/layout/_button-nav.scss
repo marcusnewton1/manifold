@@ -3,8 +3,17 @@
   text-align: center;
 
   .button-icon-primary {
-    margin: 0 20px 20px;
+    margin: 0;
     vertical-align: top;
+
+    + .button-icon-primary {
+      margin-top: 20px;
+
+      @include respond($break40) {
+        margin-top: 0;
+        margin-left: 20px;
+      }
+    }
   }
 }
 

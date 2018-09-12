@@ -395,7 +395,7 @@ module Validation
   def project_filter_params
     params.permit(
       filter: [:draft, :featured, :subject, :keyword, :order, :typeahead,
-               :with_update_ability]
+               :with_update_ability, :collection_order]
     )[:filter]
   end
 
