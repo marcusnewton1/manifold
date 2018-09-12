@@ -67,6 +67,8 @@ class Project < ApplicationRecord
   has_paper_trail on: [:update]
 
   # Associations
+  has_many :collection_projects, dependent: :destroy, inverse_of: :project
+  has_many :project_collections, through: :collection_projects
   # rubocop:disable Rails/InverseOf
   belongs_to :published_text, class_name: "Text", optional: true
   # rubocop:enable Rails/InverseOf
