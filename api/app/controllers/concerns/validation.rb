@@ -98,6 +98,22 @@ module Validation
     params.permit(param_config)
   end
 
+  def project_collection_params
+    params.require(:data)
+    attributes = [:title, :sort_order, :visible, :homepage, :smart, :position, :icon]
+    relationships = [:projects]
+    param_config = structure_params(attributes: attributes, relationships: relationships)
+    params.permit(param_config)
+  end
+
+  def collection_project_params
+    params.require(:data)
+    attributes = [:position]
+    relationships = []
+    param_config = structure_params(attributes: attributes, relationships: relationships)
+    params.permit(param_config)
+  end
+
   # rubocop:disable Metrics/MethodLength
   def resource_params
     params.require(:data)
@@ -337,6 +353,10 @@ module Validation
 
   def page_filter_params
     params.permit(filter: [:purpose])[:filter]
+  end
+
+  def project_collection_filter_params
+    params.permit(filter: [:visible, :show_on_homepage, :projects, :order])[:filter]
   end
 
   def user_filter_params
