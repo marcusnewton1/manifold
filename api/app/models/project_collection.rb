@@ -42,6 +42,9 @@ class ProjectCollection < ApplicationRecord
   validates :title, presence: true, uniqueness: true
   validates :sort_column, :sort_direction, :icon, presence: true
 
+  # Callbacks
+  after_save :cache_collection_projects!
+
   def sort_order
     { sort_column => sort_direction }
   end
@@ -52,5 +55,12 @@ class ProjectCollection < ApplicationRecord
 
   def project_count
     projects.count
+  end
+
+  private
+
+  def cache_collection_projects!
+    return unless smart?
+    ProjectCollectionJobs::CacheCollectionProjectsJob.perform_later self
   end
 end
