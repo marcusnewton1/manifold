@@ -8,7 +8,12 @@ export default class ProjectListItem extends PureComponent {
   static displayName = "Project.ListItem";
 
   static propTypes = {
-    entity: PropTypes.object
+    entity: PropTypes.object,
+    wrapper: PropTypes.bool
+  };
+
+  static defaultProps = {
+    wrapper: true
   };
 
   projectLink(project) {
@@ -67,27 +72,40 @@ export default class ProjectListItem extends PureComponent {
     return <img src={imageStyle} alt={`View ${project.attributes.title}`} />;
   }
 
+  renderContent(project) {
+    const attr = project.attributes;
+
+    return (
+      <header>
+        <figure className="cover">
+          {this.renderProjectImage(project)}
+        </figure>
+        <div className="meta">
+          <h3 className="name">
+            <span className="title-text">{attr.title}</span>
+            {this.renderProjectStatusMarker(attr)}
+            <span className="subtitle">{attr.subtitle}</span>
+          </h3>
+          {this.renderProjectMakers(project.relationships.creators)}
+        </div>
+      </header>
+    );
+  }
+
   render() {
     const project = this.props.entity;
-    const attr = project.attributes;
-    return (
+    if (this.props.wrapper) return (
       <li key={project.id}>
         <Link to={this.projectLink(project)}>
-          <header>
-            <figure className="cover">
-              {this.renderProjectImage(project)}
-            </figure>
-            <div className="meta">
-              <h3 className="name">
-                <span className="title-text">{attr.title}</span>
-                {this.renderProjectStatusMarker(attr)}
-                <span className="subtitle">{attr.subtitle}</span>
-              </h3>
-              {this.renderProjectMakers(project.relationships.creators)}
-            </div>
-          </header>
+          {this.renderContent(project)}
         </Link>
       </li>
+    );
+
+    return (
+      <Link to={this.projectLink(project)}>
+        <React.Fragment>{this.renderContent(project)}</React.Fragment>
+      </Link>
     );
   }
 }

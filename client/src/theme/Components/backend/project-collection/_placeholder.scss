@@ -1,0 +1,35 @@
+.project-collection-placeholder {
+  text-align: center;
+
+  .section-heading {
+    flex-direction: column;
+
+    .main {
+      margin-top: 45px;
+    }
+
+    svg {
+      height: 150px;
+      width: 150px;
+      background-color: $neutral95;
+      border-radius: 50%;
+      padding: 15px;
+    }
+  }
+
+  .centered-message {
+     .container & {
+       color: $neutral50;
+     }
+  }
+
+  .documentation-link {
+    @include utilityPrimary;
+    margin-top: 50px;
+
+    a {
+      color: $neutral50;
+      text-transform: none;
+    }
+  }
+}

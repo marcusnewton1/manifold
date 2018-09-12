@@ -118,7 +118,7 @@ export default class ListOrderable extends PureComponent {
       )
     });
 
-    return <Grid entities={entities} onSortEnd={this.handleGridOrderChange} axis={"xy"} />
+    return <Grid entities={entities} helperClass="dragging" onSortEnd={this.handleGridOrderChange} axis={"xy"} />
   }
 
   renderListEntity = (entity, index) => {

@@ -1,0 +1,64 @@
+// CABS could make class name something
+// more function-defined than content-defined
+// TODO revisit sizing when have tablet/mobile comp
+.project-collection-list {
+  .orderable-list-item + .orderable-list-item {
+    margin-top: 10px;
+  }
+
+  .project-collection-list-item {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      color: $neutral50;
+      background-color: $neutral95;
+      border-radius: 5px;
+      cursor: pointer;
+      transition:
+              color $duration $timing,
+              background-color $duration $timing;
+
+    &.selected {
+      color: $neutral95;
+      background-color: $accentPrimary;
+    }
+
+    .item-text {
+      @include templateHead;
+      font-size: 16px;
+      line-height: 21px;
+    }
+
+    .icon-group {
+      display: flex;
+      align-items: center;
+
+      > * {
+        margin-left: 15px;
+      }
+    }
+
+    button {
+      @include buttonUnstyled;
+      cursor: grab;
+    }
+  }
+}
+
+.actions {
+  margin-top: 37px;
+  margin-bottom: 25px;
+  margin-left: 0;
+
+  @include respond($break95) {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .button-icon-secondary {
+    width: 100%;
+    margin: 0;
+  }
+}
