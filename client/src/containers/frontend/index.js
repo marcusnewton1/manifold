@@ -15,6 +15,7 @@ import EventList from "./EventList";
 import Search from "./Search";
 import Subscriptions from "./Subscriptions";
 import Unsubscribe from "./Unsubscribe";
+import Projects from "./Projects";
 
 export {
   CollectionDetail,
@@ -33,5 +34,6 @@ export {
   EventList,
   Search,
   Subscriptions,
-  Unsubscribe
+  Unsubscribe,
+  Projects
 };
