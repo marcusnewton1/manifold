@@ -6,7 +6,6 @@ import { HigherOrder } from "containers/global";
 import { projectCollectionsAPI, requests } from "api";
 import { entityStoreActions } from "actions";
 import { connect } from "react-redux";
-import pick from "lodash/pick";
 import lh from "helpers/linkHandler";
 
 const { request } = entityStoreActions;
@@ -60,6 +59,23 @@ export class ProjectCollectionSettings extends PureComponent {
   closeDialog() {
     this.setState({ confirmation: null });
   }
+
+  updateSubjects = subjects => {
+    const adjustedSubjects = subjects.map(subject => {
+      return {
+        id: subject.id,
+        type: "subjects"
+      };
+    });
+    const entity = {
+      type: "projectCollection",
+      id: this.props.projectCollection.id,
+      relationships: { subjects: { data: adjustedSubjects } }
+    };
+    const call = projectCollectionsAPI.update(entity.id, entity);
+    const entityRequest = request(call, requests.beProjectCollectionUpdate);
+    this.props.dispatch(entityRequest);
+  };
 
   render() {
     const { projectCollection } = this.props;
@@ -115,6 +131,10 @@ export class ProjectCollectionSettings extends PureComponent {
               name="attributes[homepage]"
             />
             <ProjectCollection.Form.IconPicker
+              {...this.props}
+            />
+            <ProjectCollection.Form.SmartAttributes
+              subjectChangeHandler={this.updateSubjects}
               {...this.props}
             />
             <Form.Save text="Save Project Collection" />

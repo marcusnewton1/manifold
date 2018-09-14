@@ -2,11 +2,12 @@ module Api
   module V1
     class ProjectCollectionsController < ApplicationController
 
-      INCLUDES = %w(projects projects.creators projects.contributors).freeze
+      INCLUDES = %w(projects projects.creators projects.contributors subjects).freeze
 
       resourceful! ProjectCollection, authorize_options: { except: [:index, :show] } do
         includes = [
           :projects,
+          :subjects,
           { projects: [:creators, :contributors] }
         ]
 

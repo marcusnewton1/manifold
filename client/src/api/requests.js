@@ -71,6 +71,7 @@ export default {
   beProjectCollection: "backend-project-collection",
   beProjectCollectionDestroy: "backend-project-collection-destroy",
   beProjectCollectionCreate: "backend-project-collection-create",
+  beProjectCollectionUpdate: "backend-project-collection-update",
   beCollectionProjects: "backend-collection-projects",
   feProject: "frontend-project",
   tmpProject: "project-detail",
