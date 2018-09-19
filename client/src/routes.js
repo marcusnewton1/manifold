@@ -288,13 +288,14 @@ export default () => {
                   exact: true,
                   component: Backend.ProjectCollection.New,
                   path: "/backend/projects/project-collections/new",
+                  slot: "drawer",
                   helper: () => `/backend/projects/project-collections/new`,
                 },
                 {
                   name: "backendProjectCollection",
-                  exact: true,
+                  exact: false,
                   component: Backend.ProjectCollection.Detail,
-                  path: "/backend/projects/project-collections/:id/:action?",
+                  path: "/backend/projects/project-collections/:id?",
                   helper: pc => `/backend/projects/project-collections/${pc}`,
                   routes: [
                     {

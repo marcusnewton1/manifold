@@ -48,24 +48,9 @@ export class ProjectCollectionWrapperContainer extends PureComponent {
     match: PropTypes.object
   };
 
-  componentDidUpdate(prevProps) {
-    this.redirectToFirstCollection(this.props, prevProps);
-  }
-
   activeProjectCollection() {
     const { match, projectCollections } = this.props;
-    return projectCollections.find(pc => pc.id === match.params.id);
-  }
-
-  redirectToFirstCollection(props, prevProps) {
-    const prevMatch = prevProps.match;
-    const projectCollections = props.projectCollections;
-
-    if (!prevMatch.params.id && size(projectCollections) > 0) {
-      const firstProject = projectCollections.sort(pc => pc.attributes.position)[0];
-      const url = lh.link("backendProjectCollection", firstProject.id);
-      props.history.push(url);
-    }
+    return projectCollections.find(pc => pc.id === match.params.id) || projectCollections[0];
   }
 
   handleCollectionOrderChange = result => {
@@ -116,38 +101,36 @@ export class ProjectCollectionWrapperContainer extends PureComponent {
   }
 
   // TODO: Add icons
-  renderHeader() {
-    const activeProjectCollection = this.activeProjectCollection();
-    if (!activeProjectCollection) return null;
-    const iconName = activeProjectCollection.attributes.smart
+  renderHeader(projectCollection) {
+    if (!projectCollection) return null;
+    const iconName = projectCollection.attributes.smart
       ? `project-placeholder`
       : `project-placeholder`;
 
     return (
       <Navigation.DetailHeader
         iconName={iconName}
-        title={activeProjectCollection.attributes.title}
-        utility={this.renderUtility(activeProjectCollection)}
+        title={projectCollection.attributes.title}
+        utility={this.renderUtility(projectCollection)}
       />
     );
   }
 
   render() {
-    const { match } = this.props;
-    const activeId = match.params.id;
-
+    const projectCollection = this.activeProjectCollection();
     if (!this.props.projectCollections) return <ProjectCollection.Placeholder />;
+    const drawerProps = { closeUrl: lh.link("backendProjectCollections") };
 
     return (
       <section className="backend-panel">
-        {this.renderHeader()}
+        {this.renderHeader(projectCollection)}
         <div className="container">
           <aside className="aside-wide project-collection-list">
             <List.Orderable
               entities={this.props.projectCollections}
               entityComponent={ProjectCollection.ListItem}
               entityComponentProps={{
-                active: activeId,
+                active: projectCollection.id,
                 clickHandler: this.handleCollectionSelect
               }}
               match={this.props.match}
@@ -165,7 +148,8 @@ export class ProjectCollectionWrapperContainer extends PureComponent {
             </p>
           </aside>
           <div className="panel-narrow">
-            {childRoutes(this.props.route)}
+            {childRoutes(this.props.route, { slot: "drawer", drawer: true })}
+            {childRoutes(this.props.route, { childProps: { projectCollection, drawerProps } })}
           </div>
         </div>
       </section>

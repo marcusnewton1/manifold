@@ -14,26 +14,9 @@ const perPage = 12;
 
 export class ProjectCollectionDetail extends PureComponent {
   static displayName = "ProjectCollection.Detail";
-  static fetchData = (getState, dispatch, location, match) => {
-    const state = getState();
-    const promises = [];
-
-    if (!isEntityLoaded("projectCollections", match.params.id, state)) {
-      const p = projectCollectionsAPI.show(match.params.id);
-      const { promise: one } = dispatch(request(p, requests.beProjectCollection));
-      promises.push(one);
-    }
-
-    const call = projectCollectionsAPI.collectionProjects(match.params.id);
-    const { promise: two } = dispatch(request(call, requests.beCollectionProjects));
-    promises.push(two);
-
-    return Promise.all(promises);
-  };
 
   static mapStateToProps = (state, ownProps) => {
     return {
-      projectCollection: grab("projectCollections", ownProps.match.params.id, state.entityStore),
       collectionProjects: select(requests.beCollectionProjects, state.entityStore),
       collectionProjectsMeta: meta(requests.beCollectionProjects, state.entityStore),
     };
@@ -47,6 +30,20 @@ export class ProjectCollectionDetail extends PureComponent {
     route: PropTypes.object,
     location: PropTypes.object
   };
+
+  fetchCollectionProjects() {
+    const { projectCollection } = this.props;
+    const call = projectCollectionsAPI.collectionProjects(projectCollection.id);
+    this.props.dispatch(request(call, requests.beCollectionProjects));
+  }
+
+  componentDidMount() {
+    this.fetchCollectionProjects();
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(flush(requests.beProject));
+  }
 
   handleProjectOrderChange = result => {
     const changes = { attributes: { position: result.position } };
@@ -77,7 +74,6 @@ export class ProjectCollectionDetail extends PureComponent {
   render() {
     const { projectCollection, collectionProjects } = this.props;
     if (!projectCollection) return null;
-
     return (
       <div>
         <List.Orderable
