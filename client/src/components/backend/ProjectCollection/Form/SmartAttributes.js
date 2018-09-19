@@ -40,9 +40,8 @@ export default class SmartAttributes extends Component {
                 label="Subjects"
                 placeholder="Add a Subject"
                 instructions="Include all Projects with these subjects."
-                onChange={this.handleSubjectChange}
-                entities={this.props.projectCollection.relationships.subjects}
                 entityLabelAttribute="name"
+                name="relationships[subjects]"
                 optionsFetch={subjectsAPI.index}
               />
               <Form.TagList
