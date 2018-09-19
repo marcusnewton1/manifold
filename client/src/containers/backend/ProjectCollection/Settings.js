@@ -60,23 +60,6 @@ export class ProjectCollectionSettings extends PureComponent {
     this.setState({ confirmation: null });
   }
 
-  updateSubjects = subjects => {
-    const adjustedSubjects = subjects.map(subject => {
-      return {
-        id: subject.id,
-        type: "subjects"
-      };
-    });
-    const entity = {
-      type: "projectCollection",
-      id: this.props.projectCollection.id,
-      relationships: { subjects: { data: adjustedSubjects } }
-    };
-    const call = projectCollectionsAPI.update(entity.id, entity);
-    const entityRequest = request(call, requests.beProjectCollectionUpdate);
-    this.props.dispatch(entityRequest);
-  };
-
   render() {
     const { projectCollection } = this.props;
     if (!projectCollection) return null;
@@ -134,7 +117,6 @@ export class ProjectCollectionSettings extends PureComponent {
               {...this.props}
             />
             <ProjectCollection.Form.SmartAttributes
-              subjectChangeHandler={this.updateSubjects}
               {...this.props}
             />
             <Form.Save text="Save Project Collection" />

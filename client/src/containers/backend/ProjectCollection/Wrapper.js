@@ -155,10 +155,10 @@ export class ProjectCollectionWrapperContainer extends PureComponent {
               name="project-collections"
             />
             <div className="actions">
-              <button className="button-icon-secondary">
+              <Link className="button-icon-secondary" to={lh.link("backendProjectCollectionNew")}>
                 <i className="manicon manicon-plus" />
                   Create New Collection
-              </button>
+              </Link>
             </div>
             <p className="instructional-copy">
               Drag Collections to reorder how they’ll appear in your Library. Select a Collection to edit its settings, visibility, and contents.

@@ -101,7 +101,7 @@ module Validation
   def project_collection_params
     params.require(:data)
     attributes = [:title, :sort_order, :visible, :homepage, :smart, :position, :icon,
-                  :tag_list]
+                  :tag_list, :number_of_projects]
     relationships = [:projects, :subjects]
     param_config = structure_params(attributes: attributes, relationships: relationships)
     params.permit(param_config)

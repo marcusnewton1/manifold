@@ -284,6 +284,13 @@ export default () => {
               helper: () => "/backend/projects/project-collections",
               routes: [
                 {
+                  name: "backendProjectCollectionNew",
+                  exact: true,
+                  component: Backend.ProjectCollection.New,
+                  path: "/backend/projects/project-collections/new",
+                  helper: () => `/backend/projects/project-collections/new`,
+                },
+                {
                   name: "backendProjectCollection",
                   exact: true,
                   component: Backend.ProjectCollection.Detail,

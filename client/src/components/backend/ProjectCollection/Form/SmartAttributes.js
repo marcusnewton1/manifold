@@ -9,12 +9,7 @@ export default class SmartAttributes extends Component {
   static displayName = "ProjectCollection.Form.SmartAttributes";
 
   static propTypes = {
-    projectCollection: PropTypes.object,
-    subjectChangeHandler: PropTypes.func.isRequired
-  };
-
-  handleSubjectChange = subjects => {
-    return this.props.subjectChangeHandler(subjects);
+    projectCollection: PropTypes.object
   };
 
   render() {
