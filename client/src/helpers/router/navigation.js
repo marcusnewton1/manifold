@@ -225,7 +225,7 @@ class Navigation {
     return [
       {
         label: "All Projects",
-        route: "backendProjects",
+        route: "backendProjectsAll",
         entity: "project",
         ability: "update"
       },

@@ -117,8 +117,8 @@ export class ProjectCollectionWrapperContainer extends PureComponent {
   }
 
   render() {
-    const projectCollection = this.activeProjectCollection();
     if (!this.props.projectCollections) return <ProjectCollection.Placeholder />;
+    const projectCollection = this.activeProjectCollection();
     const drawerProps = { closeUrl: lh.link("backendProjectCollections") };
 
     return (
