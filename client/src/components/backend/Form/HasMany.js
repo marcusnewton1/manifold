@@ -17,7 +17,8 @@ export default class FormHasMany extends PureComponent {
     orderable: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     editClickHandler: PropTypes.func,
-    optionsFetch: PropTypes.func.isRequired,
+    fetch: PropTypes.func.isRequired,
+    fetchOptions: PropTypes.object,
     entities: PropTypes.array.isRequired,
     entityLabelAttribute: PropTypes.string.isRequired,
     entityAvatarAttribute: PropTypes.string,
@@ -102,7 +103,8 @@ export default class FormHasMany extends PureComponent {
             label={this.entityName}
             onNew={this.props.onNew ? this.onNew : null}
             onSelect={this.onSelect}
-            fetch={this.props.optionsFetch}
+            fetch={this.props.fetch}
+            fetchOptions={this.props.fetchOptions}
             searchable={this.props.searchable}
             idForError={this.props.idForError}
           />

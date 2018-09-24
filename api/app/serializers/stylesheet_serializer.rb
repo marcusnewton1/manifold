@@ -4,4 +4,7 @@ class StylesheetSerializer < StylesheetPartialSerializer
 
   attributes :raw_styles
 
+  belongs_to :text, serializer: TextPartialSerializer
+  has_many :text_sections, serializer: TextSectionPartialSerializer
+
 end
